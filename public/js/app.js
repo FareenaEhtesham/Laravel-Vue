@@ -1918,7 +1918,8 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 vue__WEBPACK_IMPORTED_MODULE_1__.default.use(vue_router__WEBPACK_IMPORTED_MODULE_2__.default);
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_2__.default({
-  routes: _routes__WEBPACK_IMPORTED_MODULE_0__.routes
+  routes: _routes__WEBPACK_IMPORTED_MODULE_0__.routes,
+  mode: 'history'
 });
 var app = new vue__WEBPACK_IMPORTED_MODULE_1__.default({
   el: '#app',
@@ -37553,7 +37554,7 @@ var staticRenderFns = [
         _c("div", { staticClass: "col-md-8" }, [
           _c("div", { staticClass: "card" }, [
             _c("div", { staticClass: "card-header" }, [
-              _vm._v("Example Component")
+              _vm._v("Dashboard Component")
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "card-body" }, [
@@ -37599,7 +37600,7 @@ var staticRenderFns = [
         _c("div", { staticClass: "col-md-8" }, [
           _c("div", { staticClass: "card" }, [
             _c("div", { staticClass: "card-header" }, [
-              _vm._v("Example Component")
+              _vm._v("Profile Component")
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "card-body" }, [
