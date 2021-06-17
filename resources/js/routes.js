@@ -1,5 +1,6 @@
 import Dashboard from './components/Dashboard.vue';
 import Profile from './components/Profile.vue';
+import User from './components/Users.vue';
 
 export const routes = [
     {
@@ -11,5 +12,10 @@ export const routes = [
         name: 'profile',
         path: '/profile',
         component: Profile
+    },
+    {
+        name: 'users',
+        path: '/users',
+        component: User
     },
 ];
