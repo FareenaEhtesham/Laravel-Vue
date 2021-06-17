@@ -25,19 +25,21 @@
                                     <th>Name</th>
                                     <th>Email</th>
                                     <th>Type</th>
+                                    <th>Registered At</th>
                                     <th>Modify</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>183</td>
-                                    <td>John Doe</td>
-                                    <td>abc@gmail.com</td>
+                                <tr v-for="user in users" :key="user.id">
+                                    <td>{{ user.id }}</td>
+                                    <td>{{ user.name }}</td>
+                                    <td>{{ user.email }}</td>
                                     <td>
-                                        <span class="tag tag-success"
-                                            >Approved</span
-                                        >
+                                        <span class="tag tag-success">{{
+                                            user.type | capitalize
+                                        }}</span>
                                     </td>
+                                    <td>{{ user.created_at | Date }}</td>
                                     <td>
                                         <form action="" method="POST">
                                             <a href="#" title="edit">
@@ -67,6 +69,7 @@
         </div>
 
         <div
+            data-backdrop="static"
             class="modal fade"
             id="addNewUser"
             tabindex="-1"
@@ -147,6 +150,14 @@
                                 name="add"
                                 id="add"
                             />
+                            <button
+                                type="button"
+                                class="btn btn-secondary"
+                                data-dismiss="modal"
+                                style="background-color: red"
+                            >
+                                Close
+                            </button>
                         </form>
                     </div>
                 </div>
@@ -159,21 +170,28 @@
 <script>
 import Form from "vform";
 export default {
-    data: () => ({
-        form: new Form({
-            name: "",
-            email: "",
-            type: "",
-            password: ""
-        })
-    }),
+    data() {
+        return {
+            users: {},
+            form: new Form({
+                name: "",
+                email: "",
+                type: "",
+                password: ""
+            })
+        };
+    },
     mounted() {
-        console.log("Component mounted.");
+        this.LoadUsers();
     },
 
     methods: {
         CreateUser() {
             this.form.post("api/user");
+        },
+
+        LoadUsers() {
+            axios.get("api/user").then(({ data }) => (this.users = data));
         }
     }
 };

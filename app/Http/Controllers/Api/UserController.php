@@ -16,7 +16,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        return User::orderBy('id', 'DESC')->get();
     }
 
     /**
@@ -27,6 +27,13 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+        $this->validate($request,[
+            'name' => 'required|string|max:100',
+            'email' => 'required|unique:users|string|max:200|email',
+            'type' => 'required',
+            'password' => 'required',
+        ]);
+
         $form_data = array(
             'name'       =>   $request->name,
             'email'       =>   $request->email,
