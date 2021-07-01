@@ -13,7 +13,7 @@
   <link rel="stylesheet" href="{{ URL::asset('/assets/css/adminlte.min.css')}}">
   <link rel="stylesheet" href="{{ URL::asset('/assets/plugins/overlayScrollbars/css/OverlayScrollbars.min.css')}}">
   <link rel="stylesheet" href="{{ URL::asset('/assets/plugins/daterangepicker/daterangepicker.css')}}">
-  <link rel="stylesheet" href="{{ URL::asset('/assets/plugins/summernote/summernote-bs4.min.css')}}">
+
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper" id="app">
@@ -133,11 +133,11 @@
 <script src="{{ URL::asset('assets/plugins/moment/moment.min.js')}}"></script>
 <script src="{{ URL::asset('assets/plugins/daterangepicker/daterangepicker.js')}}"></script>
 <script src="{{ URL::asset('assets/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js')}}"></script>
-<script src="{{ URL::asset('assets/plugins/summernote/summernote-bs4.min.js')}}"></script>
 <script src="{{ URL::asset('assets/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js')}}"></script>
 <script src="{{ URL::asset('assets/js/adminlte.js')}}"></script>
 <script src="{{ URL::asset('assets/js/demo.js')}}"></script>
 <script src="{{ URL::asset('assets/js/pages/dashboard.js')}}"></script>
 <script src="{{mix('js/app.js')}}"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
 </body>
 </html>    

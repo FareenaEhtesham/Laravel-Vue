@@ -4,8 +4,11 @@ import Vue from 'vue';
 import moment from 'moment';
 import VueRouter from 'vue-router';
 import {routes} from './routes';
+import VueProgressBar from 'vue-progressbar';
+import swal from 'sweetalert2';
 
 Vue.use(VueRouter)
+window.swal=swal;
 
 const router = new VueRouter({
     routes: routes,
@@ -22,6 +25,32 @@ Vue.filter('Date' , function(value){
     return moment(value).format('MMMM Do YYYY, h:mm:ss a'); //moment is function
     //so we pass value in here
 });
+
+Vue.use(VueProgressBar, {
+    color: 'rgb(143, 255, 199)',
+    failedColor: 'red',
+    height: '2px',
+    transition: {
+        speed: '2s',
+        opacity: '0.6s',
+        termination: 300
+      },
+  });
+
+// toast notification by sweetalert
+ 
+const Toast = swal.mixin({
+    toast: true,
+    position: 'top-end',
+    timer: 3000,
+    showConfirmButton: false,
+    didOpen: (toast) => {
+      toast.addEventListener('mouseenter', Swal.stopTimer)
+      toast.addEventListener('mouseleave', Swal.resumeTimer)
+    }
+  })
+  window.Toast=Toast;
+
 const app = new Vue({
     el: '#app',
     router: router

@@ -26,8 +26,10 @@
     },
     "dependencies": {
         "moment": "^2.29.1",
+        "sweetalert2": "^11.0.17",
         "vform": "^2.0.4",
         "vue-axios": "^3.2.4",
+        "vue-progressbar": "^0.7.5",
         "vue-router": "^3.5.1"
     }
 }

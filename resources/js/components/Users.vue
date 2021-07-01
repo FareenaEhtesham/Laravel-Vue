@@ -183,11 +183,21 @@ export default {
     },
     mounted() {
         this.LoadUsers();
+        //every 3 seconds it send http request to update data
+        setInterval(() => this.LoadUsers(), 3000);
     },
 
     methods: {
         CreateUser() {
+            this.$Progress.start();
             this.form.post("api/user");
+            $("#addNewUser").modal("hide");
+            this.$Progress.finish();
+
+            Toast.fire({
+                icon: "success",
+                title: "User add successfully"
+            });
         },
 
         LoadUsers() {
