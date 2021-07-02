@@ -2073,20 +2073,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
+      editMode: false,
       users: {},
       form: new vform__WEBPACK_IMPORTED_MODULE_0__.default({
+        id: '',
         name: "",
         email: "",
         type: "",
@@ -2098,28 +2092,95 @@ __webpack_require__.r(__webpack_exports__);
     var _this = this;
 
     this.LoadUsers(); //every 3 seconds it send http request to update data
+    // setInterval(() => this.LoadUsers(), 3000);
 
-    setInterval(function () {
-      return _this.LoadUsers();
-    }, 3000);
+    Fire.$on("UserCreate", function () {
+      _this.LoadUsers();
+    }); //Fire.$on listen an event
   },
   methods: {
-    CreateUser: function CreateUser() {
+    UpdateUser: function UpdateUser() {
+      var _this2 = this;
+
       this.$Progress.start();
-      this.form.post("api/user");
-      $("#addNewUser").modal("hide");
-      this.$Progress.finish();
-      Toast.fire({
-        icon: "success",
-        title: "User add successfully"
+      this.form.put('api/user/' + this.form.id).then(function () {
+        Fire.$emit("UserCreate");
+        $("#addNewUser").modal("hide");
+        Toast.fire({
+          icon: "success",
+          title: "User update successfully"
+        });
+
+        _this2.$Progress.finish();
+      })["catch"](function () {
+        _this2.$Progress.fail();
+      });
+    },
+    EditUser: function EditUser(user) {
+      this.editMode = true;
+      $("#addNewUser").modal("show");
+      this.form.fill(user);
+      $(".heading").html("Update User's Info");
+      $("#add").val("Update");
+    },
+    Reset: function Reset() {
+      this.form.reset(); //reset the form fields
+
+      this.form.clear(); // clear all the errors
+    },
+    newModal: function newModal() {
+      this.form.reset();
+      this.editMode = false;
+      $(".heading").html("Add New User");
+      $("#add").val("Create");
+    },
+    DeleteUser: function DeleteUser(id) {
+      var _this3 = this;
+
+      swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      }).then(function (result) {
+        if (result.isConfirmed) {
+          _this3.form["delete"]("api/user/" + id).then(function () {
+            swal.fire('Deleted!', 'Your file has been deleted.', 'success');
+            Fire.$emit("UserCreate");
+          })["catch"](function () {
+            return _this3.$Progress.fail();
+          });
+        }
+      });
+    },
+    CreateUser: function CreateUser() {
+      var _this4 = this;
+
+      this.editMode = false;
+      this.$Progress.start();
+      this.form.post("api/user").then(function () {
+        Fire.$emit("UserCreate"); // after post a form create an event "UserCreate"
+
+        $("#addNewUser").modal("hide");
+        Toast.fire({
+          icon: "success",
+          title: "User add successfully"
+        });
+
+        _this4.$Progress.finish();
+      })["catch"](function () {
+        _this4.$Progress.fail();
       });
     },
     LoadUsers: function LoadUsers() {
-      var _this2 = this;
+      var _this5 = this;
 
       axios.get("api/user").then(function (_ref) {
         var data = _ref.data;
-        return _this2.users = data;
+        return _this5.users = data;
       });
     }
   }
@@ -2184,11 +2245,14 @@ var Toast = sweetalert2__WEBPACK_IMPORTED_MODULE_3___default().mixin({
   timer: 3000,
   showConfirmButton: false,
   didOpen: function didOpen(toast) {
-    toast.addEventListener('mouseenter', Swal.stopTimer);
-    toast.addEventListener('mouseleave', Swal.resumeTimer);
+    toast.addEventListener('mouseenter', (sweetalert2__WEBPACK_IMPORTED_MODULE_3___default().stopTimer));
+    toast.addEventListener('mouseleave', (sweetalert2__WEBPACK_IMPORTED_MODULE_3___default().resumeTimer));
   }
 });
-window.Toast = Toast;
+window.Toast = Toast; // make this global variable to use any where in any component
+
+var Fire = new vue__WEBPACK_IMPORTED_MODULE_4__.default();
+window.Fire = Fire;
 var app = new vue__WEBPACK_IMPORTED_MODULE_4__.default({
   el: '#app',
   router: router
@@ -62551,11 +62615,28 @@ var render = function() {
     _c("div", { staticClass: "row" }, [
       _c("div", { staticClass: "col-12 mt-5" }, [
         _c("div", { staticClass: "card" }, [
-          _vm._m(0),
+          _c("div", { staticClass: "card-header" }, [
+            _c("h3", { staticClass: "card-title" }, [_vm._v("Users Table")]),
+            _vm._v(" "),
+            _c("div", { staticClass: "card-tools" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-success",
+                  attrs: {
+                    "data-toggle": "modal",
+                    "data-target": "#addNewUser"
+                  },
+                  on: { click: _vm.newModal }
+                },
+                [_c("i", { staticClass: "fas fa-users" }, [_vm._v("Add New")])]
+              )
+            ])
+          ]),
           _vm._v(" "),
           _c("div", { staticClass: "card-body table-responsive p-0" }, [
             _c("table", { staticClass: "table table-hover text-nowrap" }, [
-              _vm._m(1),
+              _vm._m(0),
               _vm._v(" "),
               _c(
                 "tbody",
@@ -62575,7 +62656,38 @@ var render = function() {
                     _vm._v(" "),
                     _c("td", [_vm._v(_vm._s(_vm._f("Date")(user.created_at)))]),
                     _vm._v(" "),
-                    _vm._m(2, true)
+                    _c("td", [
+                      _c(
+                        "a",
+                        {
+                          attrs: { href: "#", title: "edit" },
+                          on: {
+                            click: function($event) {
+                              return _vm.EditUser(user)
+                            }
+                          }
+                        },
+                        [_c("i", { staticClass: "fas fa-edit" })]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          staticStyle: {
+                            border: "none",
+                            "background-color": "transparent",
+                            outline: "none"
+                          },
+                          attrs: { type: "submit", title: "delete" },
+                          on: {
+                            click: function($event) {
+                              return _vm.DeleteUser(user.id)
+                            }
+                          }
+                        },
+                        [_c("i", { staticClass: "fas fa-trash text-danger" })]
+                      )
+                    ])
                   ])
                 }),
                 0
@@ -62595,7 +62707,7 @@ var render = function() {
           id: "addNewUser",
           tabindex: "-1",
           role: "dialog",
-          "aria-labelledby": "exampleModalCenterTitle",
+          "aria-labelledby": "addNewLabel",
           "aria-hidden": "true"
         }
       },
@@ -62608,7 +62720,7 @@ var render = function() {
           },
           [
             _c("div", { staticClass: "modal-content pt-10" }, [
-              _c("h5", { staticClass: "ml-auto mr-auto mt-4" }, [
+              _c("h5", { staticClass: "ml-auto mr-auto mt-4 heading" }, [
                 _vm._v("Add New User")
               ]),
               _vm._v(" "),
@@ -62619,7 +62731,7 @@ var render = function() {
                     on: {
                       submit: function($event) {
                         $event.preventDefault()
-                        return _vm.CreateUser($event)
+                        _vm.editMode ? _vm.UpdateUser() : _vm.CreateUser()
                       }
                     }
                   },
@@ -62799,7 +62911,7 @@ var render = function() {
                     _c("input", {
                       staticClass: "btn btn-primary",
                       staticStyle: { "background-color": "#0091b6" },
-                      attrs: { type: "submit", name: "add", id: "add" }
+                      attrs: { type: "submit", value: "Create", id: "add" }
                     }),
                     _vm._v(" "),
                     _c(
@@ -62807,7 +62919,8 @@ var render = function() {
                       {
                         staticClass: "btn btn-secondary",
                         staticStyle: { "background-color": "red" },
-                        attrs: { type: "button", "data-dismiss": "modal" }
+                        attrs: { type: "button", "data-dismiss": "modal" },
+                        on: { click: _vm.Reset }
                       },
                       [
                         _vm._v(
@@ -62830,25 +62943,6 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card-header" }, [
-      _c("h3", { staticClass: "card-title" }, [_vm._v("Users Table")]),
-      _vm._v(" "),
-      _c("div", { staticClass: "card-tools" }, [
-        _c(
-          "button",
-          {
-            staticClass: "btn btn-success",
-            attrs: { "data-toggle": "modal", "data-target": "#addNewUser" }
-          },
-          [_c("i", { staticClass: "fas fa-users" }, [_vm._v("Add New")])]
-        )
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
     return _c("thead", [
       _c("tr", [
         _c("th", [_vm._v("ID")]),
@@ -62862,35 +62956,6 @@ var staticRenderFns = [
         _c("th", [_vm._v("Registered At")]),
         _vm._v(" "),
         _c("th", [_vm._v("Modify")])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("td", [
-      _c("form", { attrs: { action: "", method: "POST" } }, [
-        _c("a", { attrs: { href: "#", title: "edit" } }, [
-          _c("i", { staticClass: "fas fa-edit" })
-        ]),
-        _vm._v(" "),
-        _c(
-          "button",
-          {
-            staticStyle: {
-              border: "none",
-              "background-color": "transparent",
-              outline: "none"
-            },
-            attrs: {
-              type: "submit",
-              title: "delete",
-              onclick: "return confirm('Are you sure you want to delete this?')"
-            }
-          },
-          [_c("i", { staticClass: "fas fa-trash text-danger" })]
-        )
       ])
     ])
   }

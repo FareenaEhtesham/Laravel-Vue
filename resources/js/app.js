@@ -45,11 +45,15 @@ const Toast = swal.mixin({
     timer: 3000,
     showConfirmButton: false,
     didOpen: (toast) => {
-      toast.addEventListener('mouseenter', Swal.stopTimer)
-      toast.addEventListener('mouseleave', Swal.resumeTimer)
+      toast.addEventListener('mouseenter', swal.stopTimer)
+      toast.addEventListener('mouseleave', swal.resumeTimer)
     }
   })
   window.Toast=Toast;
+
+// make this global variable to use any where in any component
+let Fire = new Vue();
+window.Fire = Fire;
 
 const app = new Vue({
     el: '#app',

@@ -8,6 +8,7 @@
 
                         <div class="card-tools">
                             <button
+                                @click="newModal"
                                 class="btn btn-success"
                                 data-toggle="modal"
                                 data-target="#addNewUser"
@@ -41,8 +42,7 @@
                                     </td>
                                     <td>{{ user.created_at | Date }}</td>
                                     <td>
-                                        <form action="" method="POST">
-                                            <a href="#" title="edit">
+                                            <a href="#" title="edit" @click="EditUser(user)">
                                                 <i class="fas fa-edit"></i>
                                             </a>
 
@@ -50,13 +50,12 @@
                                                 type="submit"
                                                 title="delete"
                                                 style="border: none; background-color:transparent; outline: none;"
-                                                onclick="return confirm('Are you sure you want to delete this?')"
+                                                @click="DeleteUser(user.id)"
                                             >
                                                 <i
                                                     class="fas fa-trash text-danger"
                                                 ></i>
                                             </button>
-                                        </form>
                                     </td>
                                 </tr>
                             </tbody>
@@ -68,21 +67,13 @@
             </div>
         </div>
 
-        <div
-            data-backdrop="static"
-            class="modal fade"
-            id="addNewUser"
-            tabindex="-1"
-            role="dialog"
-            aria-labelledby="exampleModalCenterTitle"
-            aria-hidden="true"
-        >
+        <div data-backdrop="static" class="modal fade" id="addNewUser" tabindex="-1" role="dialog" aria-labelledby="addNewLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content pt-10">
-                    <h5 class="ml-auto mr-auto mt-4">Add New User</h5>
+                    <h5 class="ml-auto mr-auto mt-4 heading">Add New User</h5>
 
                     <div class="modal-body">
-                        <form @submit.prevent="CreateUser">
+                        <form @submit.prevent="editMode ? UpdateUser() : CreateUser()">
                             <div class="form-group">
                                 <input
                                     v-model="form.name"
@@ -147,7 +138,7 @@
                                 type="submit"
                                 style="background-color: #0091b6"
                                 class="btn btn-primary"
-                                name="add"
+                                value="Create"
                                 id="add"
                             />
                             <button
@@ -155,6 +146,7 @@
                                 class="btn btn-secondary"
                                 data-dismiss="modal"
                                 style="background-color: red"
+                                @click="Reset"
                             >
                                 Close
                             </button>
@@ -172,8 +164,10 @@ import Form from "vform";
 export default {
     data() {
         return {
+            editMode :false,
             users: {},
             form: new Form({
+                id:'',
                 name: "",
                 email: "",
                 type: "",
@@ -184,20 +178,94 @@ export default {
     mounted() {
         this.LoadUsers();
         //every 3 seconds it send http request to update data
-        setInterval(() => this.LoadUsers(), 3000);
+        // setInterval(() => this.LoadUsers(), 3000);
+
+        Fire.$on("UserCreate", () => {
+            this.LoadUsers();
+            });
+            //Fire.$on listen an event
     },
 
     methods: {
-        CreateUser() {
-            this.$Progress.start();
-            this.form.post("api/user");
-            $("#addNewUser").modal("hide");
-            this.$Progress.finish();
+        UpdateUser(){
+                this.$Progress.start();
+                this.form.put('api/user/'+this.form.id)
+                .then(() => {
+                    Fire.$emit("UserCreate"); 
+                    $("#addNewUser").modal("hide");
 
-            Toast.fire({
-                icon: "success",
-                title: "User add successfully"
-            });
+                    Toast.fire({
+                        icon: "success",
+                        title: "User update successfully"
+                    });
+                this.$Progress.finish();
+                })
+                .catch(() => {
+                    this.$Progress.fail();
+                });
+
+            },
+        EditUser(user){
+            this.editMode =true;
+            $("#addNewUser").modal("show");
+            this.form.fill(user); 
+            $(".heading").html("Update User's Info");
+            $("#add").val("Update");
+        },
+        Reset(){
+            this.form.reset();//reset the form fields
+            this.form.clear();// clear all the errors
+        },
+        newModal(){
+            this.form.reset();
+            this.editMode = false;
+            $(".heading").html("Add New User");
+            $("#add").val("Create");
+        },
+        DeleteUser(id){
+            swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+            if (result.isConfirmed) {
+                this.form.delete("api/user/"+id)
+                .then( () => {
+                    swal.fire(
+                    'Deleted!',
+                    'Your file has been deleted.',
+                    'success'
+                    )
+                    Fire.$emit("UserCreate");
+                    })
+                .catch( () => this.$Progress.fail());
+            }
+            })
+        },
+        CreateUser() {
+            this.editMode =false;
+            this.$Progress.start();
+            this.form.post("api/user")
+            .then( () => {
+                Fire.$emit("UserCreate"); // after post a form create an event "UserCreate"
+                $("#addNewUser").modal("hide");
+
+                Toast.fire({
+                    icon: "success",
+                    title: "User add successfully"
+                });
+
+                this.$Progress.finish();
+                })
+
+            .catch( () => {
+                this.$Progress.fail();
+                });
+            
         },
 
         LoadUsers() {
