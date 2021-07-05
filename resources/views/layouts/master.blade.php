@@ -96,6 +96,15 @@
           </li>
 
           <li class="nav-item">
+            <router-link to="/developer" class="nav-link" active-class="active" exact>
+              <i class="nav-icon fas fa-user text-orange"></i>
+              <p>
+                Developer
+              </p>
+            </router-link>
+          </li>
+
+          <li class="nav-item">
             <a href="{{ route('logout') }}" class="nav-link"
             onclick="event.preventDefault();
             document.getElementById('logout-form').submit();">

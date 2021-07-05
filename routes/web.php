@@ -19,5 +19,4 @@ Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('ma
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('dashboard', 'HomeController@index');
 
-
 Route::get('{path}','HomeController@index')->where( 'path', '([A-z]+)?' );

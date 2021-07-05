@@ -2,13 +2,18 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
-use App\Models\User;
+use Auth;
 
 class UserController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:api');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -55,6 +60,16 @@ class UserController extends Controller
     public function show($id)
     {
         //
+    }
+
+    public function Profile()
+    {
+        return auth('api')->user();
+    }
+    public function UpdateProfile(Request $request, User $user)
+    {
+        $user->update($request->all());
+        return $user;
     }
 
     /**
