@@ -81,9 +81,9 @@
                       </div>
                       </div>
                         <div class="form-group row">
-                        <label for="passport" class="col-sm-2 col-form-label">Passport</label>
+                        <label for="passport" class="col-sm-2 col-form-label">Password</label>
                         <div class="col-sm-10">
-                          <input type="password" class="form-control" id="passport" placeholder="Type Password">
+                          <input type="password" v-model="form.password" class="form-control" id="password" placeholder="Type Password">
                         </div>
                       </div>
                       <div class="form-group row">
@@ -122,10 +122,41 @@ export default {
 
     methods:{
       Picture(e){
-          console.log("fire");
+          let file = e.target.files[0];// store particular file in a variable "file"
+          console.log(file);
+          let reader = new FileReader();
+
+          if(file['size'] <= 192780 ){
+            reader.onloadend = (e)=> {
+           // console.log('RESULT', reader.result)
+            this.form.photo = reader.result;
+          }
+            reader.readAsDataURL(file);
+          }
+
+          else{
+            swal.fire(
+                    'Oops!',
+                    'Your File has exceed the limit',
+                    'error'
+                    )
+        }    
       },
+
       UpdateUser(){
-        this.form.put('api/profile/'+this.form.id);
+        this.$Progress.start();
+        this.form.put('api/profile/'+this.form.id)
+        .then( () => {
+               Toast.fire({
+                        icon: "success",
+                        title: "User update successfully"
+                    });
+        this.$Progress.finish();
+        })
+        .catch( () =>{
+          this.$Progress.fail();
+        });
+        
       },
 
       LoadUsers(){

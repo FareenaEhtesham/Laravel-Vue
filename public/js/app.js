@@ -2034,18 +2034,46 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     Picture: function Picture(e) {
-      console.log("fire");
+      var _this = this;
+
+      var file = e.target.files[0]; // store particular file in a variable "file"
+
+      console.log(file);
+      var reader = new FileReader();
+
+      if (file['size'] <= 192780) {
+        reader.onloadend = function (e) {
+          // console.log('RESULT', reader.result)
+          _this.form.photo = reader.result;
+        };
+
+        reader.readAsDataURL(file);
+      } else {
+        swal.fire('Oops!', 'Your File has exceed the limit', 'error');
+      }
     },
     UpdateUser: function UpdateUser() {
-      this.form.put('api/profile/' + this.form.id);
+      var _this2 = this;
+
+      this.$Progress.start();
+      this.form.put('api/profile/' + this.form.id).then(function () {
+        Toast.fire({
+          icon: "success",
+          title: "User update successfully"
+        });
+
+        _this2.$Progress.finish();
+      })["catch"](function () {
+        _this2.$Progress.fail();
+      });
     },
     LoadUsers: function LoadUsers() {
-      var _this = this;
+      var _this3 = this;
 
       axios.get('api/profile').then(function (_ref) {
         var data = _ref.data;
 
-        _this.form.fill(data);
+        _this3.form.fill(data);
       });
     }
   }
@@ -63056,9 +63084,46 @@ var render = function() {
                 ])
               ]),
               _vm._v(" "),
-              _vm._m(2),
+              _c("div", { staticClass: "form-group row" }, [
+                _c(
+                  "label",
+                  {
+                    staticClass: "col-sm-2 col-form-label",
+                    attrs: { for: "passport" }
+                  },
+                  [_vm._v("Password")]
+                ),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-sm-10" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.form.password,
+                        expression: "form.password"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: {
+                      type: "password",
+                      id: "password",
+                      placeholder: "Type Password"
+                    },
+                    domProps: { value: _vm.form.password },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.form, "password", $event.target.value)
+                      }
+                    }
+                  })
+                ])
+              ]),
               _vm._v(" "),
-              _vm._m(3)
+              _vm._m(2)
             ]
           )
         ])
@@ -63111,29 +63176,6 @@ var staticRenderFns = [
             ])
           ])
         ])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group row" }, [
-      _c(
-        "label",
-        { staticClass: "col-sm-2 col-form-label", attrs: { for: "passport" } },
-        [_vm._v("Passport")]
-      ),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-sm-10" }, [
-        _c("input", {
-          staticClass: "form-control",
-          attrs: {
-            type: "password",
-            id: "passport",
-            placeholder: "Type Password"
-          }
-        })
       ])
     ])
   },
