@@ -2050,8 +2050,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 $(document).on('keyup keypress', 'form input[type="text"]', function (e) {
+  $("#update_btn").attr("disabled", false);
+
   if (e.which == 13) {
     e.preventDefault();
     return false;
@@ -2073,7 +2074,12 @@ $(document).on('keyup keypress', 'form input[type="text"]', function (e) {
     };
   },
   mounted: function mounted() {
+    var _this = this;
+
     this.LoadUsers();
+    Fire.$on("UpdateUser", function () {
+      _this.LoadUsers();
+    });
   },
   methods: {
     GetProfilePhoto: function GetProfilePhoto() {
@@ -2081,7 +2087,7 @@ $(document).on('keyup keypress', 'form input[type="text"]', function (e) {
       return photo;
     },
     Picture: function Picture(e) {
-      var _this = this;
+      var _this2 = this;
 
       var file = e.target.files[0]; // store particular file in a variable "file"
 
@@ -2091,7 +2097,7 @@ $(document).on('keyup keypress', 'form input[type="text"]', function (e) {
       if (file['size'] <= 192780) {
         reader.onloadend = function (e) {
           // console.log('RESULT', reader.result)
-          _this.form.photo = reader.result;
+          _this2.form.photo = reader.result;
         };
 
         reader.readAsDataURL(file);
@@ -2100,27 +2106,29 @@ $(document).on('keyup keypress', 'form input[type="text"]', function (e) {
       }
     },
     UpdateUser: function UpdateUser() {
-      var _this2 = this;
+      var _this3 = this;
 
       this.$Progress.start();
       this.form.put('api/profile/' + this.form.id).then(function () {
+        Fire.$emit("UpdateUser");
         Toast.fire({
           icon: "success",
           title: "User update successfully"
         });
 
-        _this2.$Progress.finish();
+        _this3.$Progress.finish();
       })["catch"](function () {
-        _this2.$Progress.fail();
+        _this3.$Progress.fail();
       });
     },
     LoadUsers: function LoadUsers() {
-      var _this3 = this;
+      var _this4 = this;
 
+      $("#update_btn").attr("disabled", true);
       axios.get('api/profile').then(function (_ref) {
         var data = _ref.data;
 
-        _this3.form.fill(data);
+        _this4.form.fill(data);
       });
     }
   }
@@ -2139,6 +2147,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+//
+//
 //
 //
 //
@@ -7030,7 +7040,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.bootstrap-tagsinput {\n    padding: 10px 15px;\n    box-shadow: none;\n    border-radius: 2px;\n    background: #ecf0f5;\n}\n.bootstrap-tagsinput .tag {\n    padding: 5px 12px;\n    border-radius: 2px;\n    line-height: 37px;\n    margin-top: 5px;\n    margin-right: 5px;\n}\n.bootstrap-tagsinput .tag [data-role=\"remove\"] {\n    margin-right: -5px;\n}\n.bootstrap-tagsinput .tag [data-role=\"remove\"]:after {\n    content: \"\\e8f6\";\n    padding: 0 2px;\n    font-family: 'feather' !important;\n}\n.bootstrap-tagsinput {\n    padding: 5px 10px;\n    background: white;\n    border: 1px solid #e3eaef;\n    border-radius: 0.25rem;\n    width: 100%;\n}\n.bootstrap-tagsinput .tag {\n    background: #4680ff;\n    color: #fff;\n    border-radius: 0.25rem;\n}\n\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.bootstrap-tagsinput {\n    padding: 10px 15px;\n    box-shadow: none;\n    border-radius: 2px;\n    background: #ecf0f5;\n}\n.bootstrap-tagsinput .tag {\n    padding: 5px 12px;\n    border-radius: 2px;\n    line-height: 37px;\n    margin-top: 5px;\n    margin-right: 5px;\n}\n.bootstrap-tagsinput .tag [data-role=\"remove\"] {\n    margin-right: -5px;\n}\n.bootstrap-tagsinput .tag [data-role=\"remove\"]:after {\n    content: \"\\e8f6\";\n    padding: 0 2px;\n    font-family: 'feather' !important;\n}\n.bootstrap-tagsinput {\n    padding: 5px 10px;\n    background: white;\n    border: 1px solid #e3eaef;\n    border-radius: 0.25rem;\n    width: 100%;\n}\n.bootstrap-tagsinput .tag {\n    background: #4680ff;\n    color: #fff;\n    border-radius: 0.25rem;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -63350,7 +63360,10 @@ var staticRenderFns = [
       _c("div", { staticClass: "offset-sm-2 col-sm-10" }, [
         _c(
           "button",
-          { staticClass: "btn btn-danger", attrs: { type: "submit" } },
+          {
+            staticClass: "btn btn-danger",
+            attrs: { type: "submit", id: "update_btn" }
+          },
           [_vm._v("Update")]
         )
       ])
@@ -63402,63 +63415,78 @@ var render = function() {
             ])
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "card-body table-responsive p-0" }, [
-            _c("table", { staticClass: "table table-hover text-nowrap" }, [
-              _vm._m(0),
-              _vm._v(" "),
+          _c("div", { staticClass: "card-body" }, [
+            _c("div", { staticClass: "dt-responsive table-responsive" }, [
               _c(
-                "tbody",
-                _vm._l(_vm.users, function(user) {
-                  return _c("tr", { key: user.id }, [
-                    _c("td", [_vm._v(_vm._s(user.id))]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(user.name))]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(user.email))]),
-                    _vm._v(" "),
-                    _c("td", [
-                      _c("span", { staticClass: "tag tag-success" }, [
-                        _vm._v(_vm._s(_vm._f("capitalize")(user.type)))
+                "table",
+                {
+                  staticClass: "table table-hover text-nowrap",
+                  attrs: { id: "simpletable" }
+                },
+                [
+                  _vm._m(0),
+                  _vm._v(" "),
+                  _c(
+                    "tbody",
+                    _vm._l(_vm.users, function(user) {
+                      return _c("tr", { key: user.id }, [
+                        _c("td", [_vm._v(_vm._s(user.id))]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(user.name))]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(user.email))]),
+                        _vm._v(" "),
+                        _c("td", [
+                          _c("span", { staticClass: "tag tag-success" }, [
+                            _vm._v(_vm._s(_vm._f("capitalize")(user.type)))
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("td", [
+                          _vm._v(_vm._s(_vm._f("Date")(user.created_at)))
+                        ]),
+                        _vm._v(" "),
+                        _c("td", [
+                          _c(
+                            "a",
+                            {
+                              attrs: { href: "#", title: "edit" },
+                              on: {
+                                click: function($event) {
+                                  return _vm.EditUser(user)
+                                }
+                              }
+                            },
+                            [_c("i", { staticClass: "fas fa-edit" })]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "button",
+                            {
+                              staticStyle: {
+                                border: "none",
+                                "background-color": "transparent",
+                                outline: "none"
+                              },
+                              attrs: { type: "submit", title: "delete" },
+                              on: {
+                                click: function($event) {
+                                  return _vm.DeleteUser(user.id)
+                                }
+                              }
+                            },
+                            [
+                              _c("i", {
+                                staticClass: "fas fa-trash text-danger"
+                              })
+                            ]
+                          )
+                        ])
                       ])
-                    ]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(_vm._f("Date")(user.created_at)))]),
-                    _vm._v(" "),
-                    _c("td", [
-                      _c(
-                        "a",
-                        {
-                          attrs: { href: "#", title: "edit" },
-                          on: {
-                            click: function($event) {
-                              return _vm.EditUser(user)
-                            }
-                          }
-                        },
-                        [_c("i", { staticClass: "fas fa-edit" })]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "button",
-                        {
-                          staticStyle: {
-                            border: "none",
-                            "background-color": "transparent",
-                            outline: "none"
-                          },
-                          attrs: { type: "submit", title: "delete" },
-                          on: {
-                            click: function($event) {
-                              return _vm.DeleteUser(user.id)
-                            }
-                          }
-                        },
-                        [_c("i", { staticClass: "fas fa-trash text-danger" })]
-                      )
-                    ])
-                  ])
-                }),
-                0
+                    }),
+                    0
+                  )
+                ]
               )
             ])
           ])

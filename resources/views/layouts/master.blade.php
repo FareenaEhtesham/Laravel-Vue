@@ -15,6 +15,7 @@
   <link rel="stylesheet" href="{{ URL::asset('/assets/plugins/daterangepicker/daterangepicker.css')}}">
   <link rel="stylesheet" href="{{ URL::asset('/assets/plugins/bootstrap-tagsinput.css')}}">
   <link rel="stylesheet" href="{{ URL::asset('/assets/plugins/bootstrap-tagsinput-typeahead.css')}}">
+  <link rel="stylesheet" href="{{ URL::asset('/assets/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css')}}">
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper" id="app">
@@ -95,7 +96,7 @@
               </p>
             </router-link>
           </li>
-
+        
           <li class="nav-item">
             <router-link to="/developer" class="nav-link" active-class="active" exact>
               <i class="nav-icon fas fa-user text-orange"></i>
@@ -151,5 +152,9 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
 <script src="{{ URL::asset('assets/plugins/typeahead.bundle.min.js')}}"></script>
 <script src="{{ URL::asset('assets/plugins/bootstrap-tagsinput.min.js')}}"></script>
+<script src="{{ URL::asset('assets/plugins/datatables/jquery.dataTables.min.js')}}"></script>
+<script src="{{ URL::asset('assets/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js')}}"></script>
+<script src="{{ URL::asset('assets/plugins/data-basic-custom.js')}}"></script>
+
 </body>
 </html>    

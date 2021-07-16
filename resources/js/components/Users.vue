@@ -18,8 +18,9 @@
                         </div>
                     </div>
                     <!-- /.card-header -->
-                    <div class="card-body table-responsive p-0">
-                        <table class="table table-hover text-nowrap">
+                    <div class="card-body">
+                    <div class="dt-responsive table-responsive">
+                        <table id="simpletable" class="table table-hover text-nowrap">
                             <thead>
                                 <tr>
                                     <th>ID</th>
@@ -60,6 +61,7 @@
                                 </tr>
                             </tbody>
                         </table>
+                    </div>
                     </div>
                     <!-- /.card-body -->
                 </div>

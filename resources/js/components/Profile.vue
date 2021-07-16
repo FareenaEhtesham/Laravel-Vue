@@ -36,7 +36,6 @@
     color: #fff;
     border-radius: 0.25rem;
 }
-
 </style>
 <template>
     <div class="container">
@@ -127,7 +126,7 @@
                       </div>
                       <div class="form-group row">
                         <div class="offset-sm-2 col-sm-10">
-                          <button type="submit" class="btn btn-danger">Update</button>
+                          <button type="submit" class="btn btn-danger" id="update_btn">Update</button>
                         </div>
                       </div>
                     </form>
@@ -141,11 +140,13 @@
 <script>
 
 $(document).on('keyup keypress', 'form input[type="text"]', function(e) {
+  $("#update_btn").attr("disabled",false);
   if(e.which == 13) {
     e.preventDefault();
     return false;
   }
 });
+
 export default {
     data() {
         return {
@@ -163,9 +164,13 @@ export default {
     },
     mounted() {
         this.LoadUsers();
+        Fire.$on("UpdateUser", () => {
+          this.LoadUsers();
+          });
     },
 
     methods:{
+    
       GetProfilePhoto(){
         let photo ="img/profile/"+this.form.photo;
         return photo;
@@ -197,6 +202,7 @@ export default {
         this.$Progress.start();
         this.form.put('api/profile/'+this.form.id)
         .then( () => {
+          Fire.$emit("UpdateUser"); 
                Toast.fire({
                         icon: "success",
                         title: "User update successfully"
@@ -210,6 +216,7 @@ export default {
       },
 
       LoadUsers(){
+          $("#update_btn").attr("disabled", true);
           axios.get('api/profile').then( ({data}) => {this.form.fill(data)});
     },
 
