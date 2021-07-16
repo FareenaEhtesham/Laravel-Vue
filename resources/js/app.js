@@ -6,10 +6,12 @@ import VueRouter from 'vue-router';
 import {routes} from './routes';
 import VueProgressBar from 'vue-progressbar';
 import swal from 'sweetalert2';
+import Form from 'vform';
 
 Vue.use(VueRouter)
 window.swal=swal;
 
+window.Form = Form;
 const router = new VueRouter({
     routes: routes,
     mode: 'history',

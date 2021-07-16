@@ -71,6 +71,7 @@ class UserController extends Controller
         $user = auth('api')->user(); //check authenticated user
         $current_photo = $user->photo;
 
+        //if name of photo doesnot same with photo we have on database
         if($request->photo != $current_photo){
 
             $name = time().'.' . explode('/', explode(':', 
@@ -79,6 +80,17 @@ class UserController extends Controller
             \Image::make($request->photo)->save(public_path('img/profile/').$name);
 
             $request->merge(['photo' => $name]);
+
+            $user_photo = public_path("/img/profile/").$current_photo;
+
+            if(file_exists($user_photo)){
+                @unlink($user_photo);
+            }
+
+        }
+
+        if(!empty($request->password)){
+            $request->merge(['password' =>  Hash::make($request['password'])]);
         }
         $user->update($request->all());
         return $user;

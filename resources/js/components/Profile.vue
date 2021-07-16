@@ -1,4 +1,43 @@
+<style>
+  .bootstrap-tagsinput {
+    padding: 10px 15px;
+    box-shadow: none;
+    border-radius: 2px;
+    background: #ecf0f5;
+}
 
+.bootstrap-tagsinput .tag {
+    padding: 5px 12px;
+    border-radius: 2px;
+    line-height: 37px;
+    margin-top: 5px;
+    margin-right: 5px;
+}
+
+.bootstrap-tagsinput .tag [data-role="remove"] {
+    margin-right: -5px;
+}
+
+.bootstrap-tagsinput .tag [data-role="remove"]:after {
+    content: "\e8f6";
+    padding: 0 2px;
+    font-family: 'feather' !important;
+}
+.bootstrap-tagsinput {
+    padding: 5px 10px;
+    background: white;
+    border: 1px solid #e3eaef;
+    border-radius: 0.25rem;
+    width: 100%;
+}
+
+.bootstrap-tagsinput .tag {
+    background: #4680ff;
+    color: #fff;
+    border-radius: 0.25rem;
+}
+
+</style>
 <template>
     <div class="container">
         <div class="row justify-content-center">
@@ -11,7 +50,7 @@
                 <h5 class="widget-user-desc text-right">{{this.form.type}}</h5>
               </div>
               <div class="widget-user-image">
-                <img class="img-circle" src="assets/img/user3-128x128.jpg" alt="User Avatar">
+                <img class="img-circle" :src="GetProfilePhoto()" alt="User Avatar">
               </div>
               <div class="card-footer">
                 <div class="row">
@@ -53,7 +92,7 @@
                       <div class="form-group row">
                         <label for="inputName" class="col-sm-2 col-form-label">Name</label>
                         <div class="col-sm-10">
-                          <input v-model="form.name" type="text" class="form-control" id="inputName" placeholder="Name">
+                          <input v-model="form.name" type="text" class="form-control" name="name" id="inputName" placeholder="Name">
                         </div>
                       </div>
                       <div class="form-group row">
@@ -71,7 +110,7 @@
                       <div class="form-group row">
                         <label for="inputSkills" class="col-sm-2 col-form-label">Skills</label>
                         <div class="col-sm-10">
-                          <input v-model="form.skills" type="text" class="form-control" id="inputSkills" placeholder="Skills">
+                          <input v-model="form.skills" type="text" class="form-control" id="inputSkills" placeholder="Skills" data-role="tagsinput">
                         </div>
                       </div>
                       <div class="form-group">
@@ -100,7 +139,13 @@
 </template>
 
 <script>
-import Form from "vform";
+
+$(document).on('keyup keypress', 'form input[type="text"]', function(e) {
+  if(e.which == 13) {
+    e.preventDefault();
+    return false;
+  }
+});
 export default {
     data() {
         return {
@@ -121,6 +166,11 @@ export default {
     },
 
     methods:{
+      GetProfilePhoto(){
+        let photo ="img/profile/"+this.form.photo;
+        return photo;
+      }, 
+
       Picture(e){
           let file = e.target.files[0];// store particular file in a variable "file"
           console.log(file);
