@@ -140,7 +140,7 @@
 <script>
 
 $(document).on('keyup keypress', 'form input[type="text"]', function(e) {
-  $("#update_btn").attr("disabled",false);
+  // $("#update_btn").attr("disabled",false);
   if(e.which == 13) {
     e.preventDefault();
     return false;
@@ -216,7 +216,7 @@ export default {
       },
 
       LoadUsers(){
-          $("#update_btn").attr("disabled", true);
+          // $("#update_btn").attr("disabled", true);
           axios.get('api/profile').then( ({data}) => {this.form.fill(data)});
     },
 

@@ -1,7 +1,10 @@
 $(document).ready(function() {
     setTimeout(function() {
         // [ Zero Configuration ] start
-        $('#simpletable').DataTable();
+        $('#simpletable').DataTable({
+	"order": [
+               
+            ]});
 
         // [ Default Ordering ] start
         $('#order-table').DataTable({

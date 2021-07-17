@@ -7,6 +7,7 @@ import {routes} from './routes';
 import VueProgressBar from 'vue-progressbar';
 import swal from 'sweetalert2';
 import Form from 'vform';
+import Gate from './Gate';
 
 Vue.use(VueRouter)
 window.swal=swal;
@@ -56,6 +57,13 @@ const Toast = swal.mixin({
 // make this global variable to use any where in any component
 let Fire = new Vue();
 window.Fire = Fire;
+
+//USE GATE
+// Gate is a class
+Vue.prototype.$gate = new Gate(window.user)
+
+//Use this component anywhere
+Vue.component('notfound', require('./components/NotFound.vue').default);
 
 const app = new Vue({
     el: '#app',

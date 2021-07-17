@@ -1,8 +1,10 @@
 <template>
+<!-- Admin and Author have access user page
+Only Admin have access developer page -->
     <div class="container">
         <div class="row">
             <div class="col-12 mt-5">
-                <div class="card">
+                <div class="card" v-if="$gate.isAdminAuthor()">
                     <div class="card-header">
                         <h3 class="card-title">Users Table</h3>
 
@@ -47,7 +49,7 @@
                                                 <i class="fas fa-edit"></i>
                                             </a>
 
-                                            <button
+                                            <button v-if="$gate.isAdmin()"
                                                 type="submit"
                                                 title="delete"
                                                 style="border: none; background-color:transparent; outline: none;"
@@ -65,6 +67,10 @@
                     </div>
                     <!-- /.card-body -->
                 </div>
+
+                <div v-if="!$gate.isAdmin()">
+                    <notfound></notfound>
+                    </div>
                 <!-- /.card -->
             </div>
         </div>
@@ -270,7 +276,9 @@ export default {
         },
 
         LoadUsers() {
-            axios.get("api/user").then(({ data }) => (this.users = data));
+            if(this.$gate.isAdminAuthor()){
+                axios.get("api/user").then(({ data }) => (this.users = data));
+            }    
         }
     }
 };

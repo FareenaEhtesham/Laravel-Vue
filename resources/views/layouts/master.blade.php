@@ -96,7 +96,7 @@
               </p>
             </router-link>
           </li>
-        
+          @can("isAdmin")
           <li class="nav-item">
             <router-link to="/developer" class="nav-link" active-class="active" exact>
               <i class="nav-icon fas fa-user text-orange"></i>
@@ -105,6 +105,7 @@
               </p>
             </router-link>
           </li>
+          @endcan
 
           <li class="nav-item">
             <a href="{{ route('logout') }}" class="nav-link"
@@ -130,6 +131,13 @@
     <!-- /.content -->
   </div>
     </div>
+    <!--Only Authenticated user can access-->
+    @auth
+    <script>
+    window.user = @json(auth() -> user())
+    </script>
+    @endauth
+
 <!-- jQuery -->
 <script src="{{ URL::asset('assets/plugins/jquery/jquery.min.js')}}"></script>
 <script src="{{ URL::asset('assets/plugins/jquery-ui/jquery-ui.min.js')}}"></script>

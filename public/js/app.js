@@ -1855,10 +1855,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   mounted: function mounted() {
     console.log("Component mounted.");
@@ -1895,6 +1891,36 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   mounted: function mounted() {
     console.log("Component mounted.");
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/NotFound.vue?vue&type=script&lang=js&":
+/*!***************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/NotFound.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  mounted: function mounted() {
+    console.log('Component mounted.');
   }
 });
 
@@ -2051,8 +2077,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 $(document).on('keyup keypress', 'form input[type="text"]', function (e) {
-  $("#update_btn").attr("disabled", false);
-
+  // $("#update_btn").attr("disabled",false);
   if (e.which == 13) {
     e.preventDefault();
     return false;
@@ -2124,7 +2149,7 @@ $(document).on('keyup keypress', 'form input[type="text"]', function (e) {
     LoadUsers: function LoadUsers() {
       var _this4 = this;
 
-      $("#update_btn").attr("disabled", true);
+      // $("#update_btn").attr("disabled", true);
       axios.get('api/profile').then(function (_ref) {
         var data = _ref.data;
 
@@ -2147,6 +2172,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2414,13 +2445,68 @@ __webpack_require__.r(__webpack_exports__);
     LoadUsers: function LoadUsers() {
       var _this5 = this;
 
-      axios.get("api/user").then(function (_ref) {
-        var data = _ref.data;
-        return _this5.users = data;
-      });
+      if (this.$gate.isAdminAuthor()) {
+        axios.get("api/user").then(function (_ref) {
+          var data = _ref.data;
+          return _this5.users = data;
+        });
+      }
     }
   }
 });
+
+/***/ }),
+
+/***/ "./resources/js/Gate.js":
+/*!******************************!*\
+  !*** ./resources/js/Gate.js ***!
+  \******************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ Gate)
+/* harmony export */ });
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var Gate = /*#__PURE__*/function () {
+  function Gate(user) {
+    _classCallCheck(this, Gate);
+
+    this.user = user;
+  }
+
+  _createClass(Gate, [{
+    key: "isAdmin",
+    value: function isAdmin() {
+      return this.user.type === "admin";
+    }
+  }, {
+    key: "isAuthor",
+    value: function isAuthor() {
+      return this.user.type === "author";
+    }
+  }, {
+    key: "isUser",
+    value: function isUser() {
+      return this.user.type === "user";
+    }
+  }, {
+    key: "isAdminAuthor",
+    value: function isAdminAuthor() {
+      if (this.user.type === "admin" || this.user.type === "author") return true;
+    }
+  }]);
+
+  return Gate;
+}();
+
+
 
 /***/ }),
 
@@ -2432,16 +2518,17 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
+/* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
 /* harmony import */ var _routes__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./routes */ "./resources/js/routes.js");
 /* harmony import */ var vue_progressbar__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue-progressbar */ "./node_modules/vue-progressbar/dist/vue-progressbar.js");
 /* harmony import */ var vue_progressbar__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(vue_progressbar__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! sweetalert2 */ "./node_modules/sweetalert2/dist/sweetalert2.all.js");
 /* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(sweetalert2__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var vform__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vform */ "./node_modules/vform/dist/vform.es.js");
+/* harmony import */ var _Gate__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Gate */ "./resources/js/Gate.js");
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 
@@ -2451,23 +2538,24 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 
 
-vue__WEBPACK_IMPORTED_MODULE_5__.default.use(vue_router__WEBPACK_IMPORTED_MODULE_6__.default);
+
+vue__WEBPACK_IMPORTED_MODULE_6__.default.use(vue_router__WEBPACK_IMPORTED_MODULE_7__.default);
 window.swal = (sweetalert2__WEBPACK_IMPORTED_MODULE_3___default());
 window.Form = vform__WEBPACK_IMPORTED_MODULE_4__.default;
-var router = new vue_router__WEBPACK_IMPORTED_MODULE_6__.default({
+var router = new vue_router__WEBPACK_IMPORTED_MODULE_7__.default({
   routes: _routes__WEBPACK_IMPORTED_MODULE_1__.routes,
   mode: 'history'
 });
-vue__WEBPACK_IMPORTED_MODULE_5__.default.filter('capitalize', function (text) {
+vue__WEBPACK_IMPORTED_MODULE_6__.default.filter('capitalize', function (text) {
   if (!text) return '';
   text = text.toString();
   return text.charAt(0).toUpperCase() + text.slice(1);
 });
-vue__WEBPACK_IMPORTED_MODULE_5__.default.filter('Date', function (value) {
+vue__WEBPACK_IMPORTED_MODULE_6__.default.filter('Date', function (value) {
   return moment__WEBPACK_IMPORTED_MODULE_0___default()(value).format('MMMM Do YYYY, h:mm:ss a'); //moment is function
   //so we pass value in here
 });
-vue__WEBPACK_IMPORTED_MODULE_5__.default.use((vue_progressbar__WEBPACK_IMPORTED_MODULE_2___default()), {
+vue__WEBPACK_IMPORTED_MODULE_6__.default.use((vue_progressbar__WEBPACK_IMPORTED_MODULE_2___default()), {
   color: 'rgb(143, 255, 199)',
   failedColor: 'red',
   height: '2px',
@@ -2490,9 +2578,14 @@ var Toast = sweetalert2__WEBPACK_IMPORTED_MODULE_3___default().mixin({
 });
 window.Toast = Toast; // make this global variable to use any where in any component
 
-var Fire = new vue__WEBPACK_IMPORTED_MODULE_5__.default();
-window.Fire = Fire;
-var app = new vue__WEBPACK_IMPORTED_MODULE_5__.default({
+var Fire = new vue__WEBPACK_IMPORTED_MODULE_6__.default();
+window.Fire = Fire; //USE GATE
+// Gate is a class
+
+vue__WEBPACK_IMPORTED_MODULE_6__.default.prototype.$gate = new _Gate__WEBPACK_IMPORTED_MODULE_5__.default(window.user); //Use this component anywhere
+
+vue__WEBPACK_IMPORTED_MODULE_6__.default.component('notfound', __webpack_require__(/*! ./components/NotFound.vue */ "./resources/js/components/NotFound.vue").default);
+var app = new vue__WEBPACK_IMPORTED_MODULE_6__.default({
   el: '#app',
   router: router
 });
@@ -62710,6 +62803,45 @@ component.options.__file = "resources/js/components/Developer.vue"
 
 /***/ }),
 
+/***/ "./resources/js/components/NotFound.vue":
+/*!**********************************************!*\
+  !*** ./resources/js/components/NotFound.vue ***!
+  \**********************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _NotFound_vue_vue_type_template_id_2ce50e5a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./NotFound.vue?vue&type=template&id=2ce50e5a& */ "./resources/js/components/NotFound.vue?vue&type=template&id=2ce50e5a&");
+/* harmony import */ var _NotFound_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./NotFound.vue?vue&type=script&lang=js& */ "./resources/js/components/NotFound.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__.default)(
+  _NotFound_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__.default,
+  _NotFound_vue_vue_type_template_id_2ce50e5a___WEBPACK_IMPORTED_MODULE_0__.render,
+  _NotFound_vue_vue_type_template_id_2ce50e5a___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/NotFound.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/components/Profile.vue":
 /*!*********************************************!*\
   !*** ./resources/js/components/Profile.vue ***!
@@ -62822,6 +62954,22 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/NotFound.vue?vue&type=script&lang=js&":
+/*!***********************************************************************!*\
+  !*** ./resources/js/components/NotFound.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_NotFound_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./NotFound.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/NotFound.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_NotFound_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__.default); 
+
+/***/ }),
+
 /***/ "./resources/js/components/Profile.vue?vue&type=script&lang=js&":
 /*!**********************************************************************!*\
   !*** ./resources/js/components/Profile.vue?vue&type=script&lang=js& ***!
@@ -62884,6 +63032,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Developer_vue_vue_type_template_id_5932c622___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
 /* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Developer_vue_vue_type_template_id_5932c622___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./Developer.vue?vue&type=template&id=5932c622& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/Developer.vue?vue&type=template&id=5932c622&");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/NotFound.vue?vue&type=template&id=2ce50e5a&":
+/*!*****************************************************************************!*\
+  !*** ./resources/js/components/NotFound.vue?vue&type=template&id=2ce50e5a& ***!
+  \*****************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_NotFound_vue_vue_type_template_id_2ce50e5a___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_NotFound_vue_vue_type_template_id_2ce50e5a___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_NotFound_vue_vue_type_template_id_2ce50e5a___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./NotFound.vue?vue&type=template&id=2ce50e5a& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/NotFound.vue?vue&type=template&id=2ce50e5a&");
 
 
 /***/ }),
@@ -62955,30 +63120,13 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "container" }, [
-      _c("div", { staticClass: "row justify-content-center" }, [
-        _c("div", { staticClass: "col-md-8" }, [
-          _c("div", { staticClass: "card" }, [
-            _c("div", { staticClass: "card-header" }, [
-              _vm._v("Dashboard Component")
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "card-body" }, [
-              _vm._v("I'm an example component.")
-            ])
-          ])
-        ])
-      ])
+  return _c("div", { staticClass: "container" }, [
+    _c("div", { staticClass: "row justify-content-center" }, [
+      _c("div", [_c("notfound")], 1)
     ])
-  }
-]
+  ])
+}
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -63025,6 +63173,477 @@ var staticRenderFns = [
     ])
   }
 ]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/NotFound.vue?vue&type=template&id=2ce50e5a&":
+/*!********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/NotFound.vue?vue&type=template&id=2ce50e5a& ***!
+  \********************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "container" }, [
+    _c("div", { staticClass: "row justify-content-center" }, [
+      _c("h3", [
+        _vm._v(
+          "Sorry,the page you are looking is not found or you many not have access"
+        )
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-md-8 mt-4" }, [
+        _c(
+          "svg",
+          {
+            attrs: {
+              id: "a63b68c9-40cd-4f97-89ed-e7d494eb42f9",
+              "data-name": "Layer 1",
+              xmlns: "http://www.w3.org/2000/svg",
+              width: "600",
+              height: "400",
+              viewBox: "0 0 742.41705 712.57302"
+            }
+          },
+          [
+            _c("path", {
+              attrs: {
+                id: "aa38b2e7-2ea9-4025-adcf-83f87c0cfc4a",
+                "data-name": "Path 968",
+                d:
+                  "M853.60644,262.60547h-3.9v-106.977a61.915,61.915,0,0,0-61.915-61.915h-226.65a61.915,61.915,0,0,0-61.916,61.914v586.884a61.915,61.915,0,0,0,61.915,61.915h226.648a61.915,61.915,0,0,0,61.915-61.915v-403.758h3.9Z",
+                transform: "translate(-228.79147 -93.71349)",
+                fill: "#3f3d56"
+              }
+            }),
+            _c("path", {
+              attrs: {
+                id: "f27259c2-0089-4137-bfd8-cb22dff914f1",
+                "data-name": "Path 969",
+                d:
+                  "M837.00647,151.48149v595.175a46.959,46.959,0,0,1-46.942,46.952h-231.3a46.966,46.966,0,0,1-46.973-46.952v-595.175a46.965,46.965,0,0,1,46.971-46.951h28.058a22.329,22.329,0,0,0,20.656,30.74h131.868a22.329,22.329,0,0,0,20.656-30.74h30.055a46.959,46.959,0,0,1,46.951,46.942Z",
+                transform: "translate(-228.79147 -93.71349)",
+                fill: "#fff"
+              }
+            }),
+            _c("circle", {
+              attrs: {
+                id: "fc31cc31-f989-45cc-bd1e-521a0ee1871b",
+                "data-name": "Ellipse 18",
+                cx: "445.56497",
+                cy: "200.129",
+                r: "96.565",
+                fill: "#6c63ff"
+              }
+            }),
+            _c("path", {
+              attrs: {
+                id: "a573942c-3bf3-4c43-b474-689725a927f7",
+                "data-name": "Path 39",
+                d:
+                  "M779.67245,494.30947h-205.537a3.81,3.81,0,0,1-3.806-3.806V439.51949a3.811,3.811,0,0,1,3.806-3.806h205.537a3.811,3.811,0,0,1,3.806,3.806v50.985a3.811,3.811,0,0,1-3.806,3.806Zm-205.537-57.074a2.286,2.286,0,0,0-2.284,2.284v50.985a2.286,2.286,0,0,0,2.284,2.284h205.537a2.286,2.286,0,0,0,2.284-2.284v-50.985a2.286,2.286,0,0,0-2.284-2.284Z",
+                transform: "translate(-228.79147 -93.71349)",
+                fill: "#e6e6e6"
+              }
+            }),
+            _c("path", {
+              attrs: {
+                id: "fb5feb1e-1fe2-48fa-806d-0a2b51d12b49",
+                "data-name": "Path 40",
+                d:
+                  "M637.69945,454.07448a2.66449,2.66449,0,0,0,0,5.329h125.605a2.665,2.665,0,0,0,.2041-5.32611q-.0585-.00221-.11713-.0019h-125.692Z",
+                transform: "translate(-228.79147 -93.71349)",
+                fill: "#e6e6e6"
+              }
+            }),
+            _c("path", {
+              attrs: {
+                id: "bcb9932f-0864-4b7e-b0ed-f7254bb9b8bf",
+                "data-name": "Path 41",
+                d:
+                  "M637.69945,470.05846a2.66449,2.66449,0,0,0,0,5.329h125.605a2.665,2.665,0,0,0,.2041-5.32611q-.0585-.00219-.11713-.00189h-125.692Z",
+                transform: "translate(-228.79147 -93.71349)",
+                fill: "#e6e6e6"
+              }
+            }),
+            _c("path", {
+              attrs: {
+                id: "f88e2a8b-becc-4da9-bd36-af011daaaaf2",
+                "data-name": "Path 42",
+                d:
+                  "M779.67245,579.28947h-205.537a3.81,3.81,0,0,1-3.806-3.806V524.49949a3.811,3.811,0,0,1,3.806-3.806h205.537a3.811,3.811,0,0,1,3.806,3.806v50.985A3.811,3.811,0,0,1,779.67245,579.28947Zm-205.537-57.074a2.286,2.286,0,0,0-2.284,2.284v50.985a2.286,2.286,0,0,0,2.284,2.284h205.537a2.286,2.286,0,0,0,2.284-2.284v-50.985a2.286,2.286,0,0,0-2.284-2.284Z",
+                transform: "translate(-228.79147 -93.71349)",
+                fill: "#e6e6e6"
+              }
+            }),
+            _c("path", {
+              attrs: {
+                id: "e192d34f-2ccc-4f79-b47a-46430e4d87f6",
+                "data-name": "Path 43",
+                d:
+                  "M637.69945,539.33047a2.66449,2.66449,0,0,0,0,5.329h125.605a2.665,2.665,0,0,0,.087-5.328h-125.692Z",
+                transform: "translate(-228.79147 -93.71349)",
+                fill: "#e6e6e6"
+              }
+            }),
+            _c("path", {
+              attrs: {
+                id: "b230677c-48cc-4ee6-87d6-a753204ffe47",
+                "data-name": "Path 44",
+                d:
+                  "M637.69945,555.3185a2.66449,2.66449,0,0,0,0,5.329h125.605a2.665,2.665,0,0,0,.087-5.328h-125.692Z",
+                transform: "translate(-228.79147 -93.71349)",
+                fill: "#e6e6e6"
+              }
+            }),
+            _c("path", {
+              attrs: {
+                id: "b88a2a79-0ae3-4fd9-9894-02e0db9a2271",
+                "data-name": "Path 39-2",
+                d:
+                  "M779.67245,664.54748h-205.537a3.81,3.81,0,0,1-3.806-3.806V609.7575a3.811,3.811,0,0,1,3.806-3.806h205.537a3.811,3.811,0,0,1,3.806,3.806v50.985a3.811,3.811,0,0,1-3.806,3.806Zm-205.537-57.074a2.286,2.286,0,0,0-2.284,2.284v50.985a2.286,2.286,0,0,0,2.284,2.284h205.537a2.286,2.286,0,0,0,2.284-2.284v-50.985a2.286,2.286,0,0,0-2.284-2.284Z",
+                transform: "translate(-228.79147 -93.71349)",
+                fill: "#e6e6e6"
+              }
+            }),
+            _c("path", {
+              attrs: {
+                id: "aa2394a9-8b56-4a12-a2cd-a583e6ea12eb",
+                "data-name": "Path 40-2",
+                d:
+                  "M637.69945,624.59148a2.66449,2.66449,0,1,0,0,5.329h125.605a2.665,2.665,0,0,0,.2041-5.32611q-.0585-.00219-.11713-.00189h-125.692Z",
+                transform: "translate(-228.79147 -93.71349)",
+                fill: "#e6e6e6"
+              }
+            }),
+            _c("path", {
+              attrs: {
+                id: "bc352cb2-8959-4b51-bd18-df6817a9a47e",
+                "data-name": "Path 41-2",
+                d:
+                  "M637.69945,640.57846a2.66449,2.66449,0,0,0,0,5.329h125.605a2.665,2.665,0,0,0,.2041-5.32611q-.0585-.0022-.11713-.00189h-125.692Z",
+                transform: "translate(-228.79147 -93.71349)",
+                fill: "#e6e6e6"
+              }
+            }),
+            _c("path", {
+              attrs: {
+                id: "b30ee82f-5b3a-4aa4-9db7-ead828191937",
+                "data-name": "Path 970",
+                d:
+                  "M969.27042,806.28651h-738.541c-1.071,0-1.938-.468-1.938-1.045s.868-1.045,1.938-1.045H969.27054c1.06994,0,1.938.468,1.938,1.045S970.34146,806.28651,969.27042,806.28651Z",
+                transform: "translate(-228.79147 -93.71349)",
+                fill: "#e6e6e6"
+              }
+            }),
+            _c(
+              "g",
+              {
+                attrs: {
+                  id: "f24cf2fd-107c-4150-a0f1-6f6b12d88bf3",
+                  "data-name": "Group 58"
+                }
+              },
+              [
+                _c("path", {
+                  attrs: {
+                    id: "a2b576eb-bb95-4480-aa60-cd8aa023fe61",
+                    "data-name": "Path 438",
+                    d:
+                      "M937.99248,765.52151a19.4741,19.4741,0,0,1-18.806-3.313c-6.587-5.528-8.652-14.636-10.332-23.07l-4.97-24.945,10.405,7.165c7.483,5.152,15.134,10.47,20.316,17.933s7.443,17.651,3.28,25.726",
+                    transform: "translate(-228.79147 -93.71349)",
+                    fill: "#e6e6e6"
+                  }
+                }),
+                _c("path", {
+                  attrs: {
+                    id: "fe1c5433-44e0-47a6-8430-329cbd7c4dea",
+                    "data-name": "Path 439",
+                    d:
+                      "M936.38547,797.45852c1.31-9.542,2.657-19.206,1.738-28.849-.816-8.565-3.429-16.93-8.749-23.789a39.57365,39.57365,0,0,0-10.153-9.2c-1.015-.641-1.95.968-.939,1.606a37.62192,37.62192,0,0,1,14.881,17.956c3.24,8.241,3.76,17.224,3.2,25.977-.338,5.294-1.053,10.553-1.774,15.805a.964.964,0,0,0,.65,1.144.936.936,0,0,0,1.144-.65Z",
+                    transform: "translate(-228.79147 -93.71349)",
+                    fill: "#f2f2f2"
+                  }
+                }),
+                _c("path", {
+                  attrs: {
+                    id: "f0043cfc-c9b9-4981-8afd-8c13c1b6f93f",
+                    "data-name": "Path 442",
+                    d:
+                      "M926.95847,782.14846a14.336,14.336,0,0,1-12.491,6.447c-6.323-.3-11.595-4.713-16.34-8.9l-14.035-12.395,9.289-.444c6.68-.32,13.533-.618,19.9,1.442s12.231,7.018,13.394,13.6",
+                    transform: "translate(-228.79147 -93.71349)",
+                    fill: "#e6e6e6"
+                  }
+                }),
+                _c("path", {
+                  attrs: {
+                    id: "b883c521-5e9e-4a38-b47c-4f8b0cd8c6cd",
+                    "data-name": "Path 443",
+                    d:
+                      "M940.08649,802.94344c-6.3-11.156-13.618-23.555-26.685-27.518a29.77874,29.77874,0,0,0-11.224-1.159c-1.192.1-.894,1.94.3,1.837a27.6648,27.6648,0,0,1,17.912,4.739c5.051,3.438,8.983,8.217,12.311,13.286,2.039,3.1,3.865,6.341,5.691,9.573C938.97147,804.73348,940.67746,803.98843,940.08649,802.94344Z",
+                    transform: "translate(-228.79147 -93.71349)",
+                    fill: "#f2f2f2"
+                  }
+                })
+              ]
+            ),
+            _c(
+              "g",
+              {
+                attrs: {
+                  id: "b241f6a5-c54d-499c-8ecd-4235a19d143f",
+                  "data-name": "Group 59"
+                }
+              },
+              [
+                _c("circle", {
+                  attrs: {
+                    id: "bfaee8a8-2192-45bf-83cb-a2f223d41a02",
+                    "data-name": "Ellipse 5",
+                    cx: "370.98597",
+                    cy: "370.985",
+                    r: "15.986",
+                    fill: "#6c63ff"
+                  }
+                }),
+                _c("path", {
+                  attrs: {
+                    id: "ae47602b-fb54-4e88-955d-49b260f35f7f",
+                    "data-name": "Path 40-3",
+                    d:
+                      "M592.12445,461.71247c-.184,0-.333,1.193-.333,2.664s.149,2.665.333,2.665h15.719c.184.024.336-1.149.339-2.62a5.94291,5.94291,0,0,0-.328-2.708h-15.73Z",
+                    transform: "translate(-228.79147 -93.71349)",
+                    fill: "#e6e6e6"
+                  }
+                })
+              ]
+            ),
+            _c(
+              "g",
+              {
+                attrs: {
+                  id: "a1e1e52b-75f8-4aa9-8279-faf451e6aae1",
+                  "data-name": "Group 60"
+                }
+              },
+              [
+                _c("circle", {
+                  attrs: {
+                    id: "fa3a3ce2-c232-40ee-81b4-25b83d5b931c",
+                    "data-name": "Ellipse 5-2",
+                    cx: "370.98597",
+                    cy: "456.278",
+                    r: "15.986",
+                    fill: "#6c63ff"
+                  }
+                }),
+                _c("path", {
+                  attrs: {
+                    id: "aaaffa69-7c16-47ec-b12d-87139789d2df",
+                    "data-name": "Path 40-4",
+                    d:
+                      "M592.12445,547.00547c-.184,0-.333,1.193-.333,2.664s.149,2.665.333,2.665h15.719c.184.024.336-1.149.339-2.62a5.94291,5.94291,0,0,0-.328-2.708h-15.73Z",
+                    transform: "translate(-228.79147 -93.71349)",
+                    fill: "#e6e6e6"
+                  }
+                })
+              ]
+            ),
+            _c(
+              "g",
+              {
+                attrs: {
+                  id: "fd2b54c2-3dec-4fb6-9f72-e6c667a136b8",
+                  "data-name": "Group 61"
+                }
+              },
+              [
+                _c("circle", {
+                  attrs: {
+                    id: "abc19202-5605-459b-9c25-b430addb8839",
+                    "data-name": "Ellipse 5-3",
+                    cx: "370.98597",
+                    cy: "541.53599",
+                    r: "15.986",
+                    fill: "#6c63ff"
+                  }
+                }),
+                _c("path", {
+                  attrs: {
+                    id: "f69fbb38-8754-494b-94fa-96f6df4fd0e7",
+                    "data-name": "Path 40-5",
+                    d:
+                      "M592.12445,632.26346c-.184,0-.333,1.193-.333,2.664s.149,2.665.333,2.665h15.719c.184.024.336-1.149.339-2.62a5.943,5.943,0,0,0-.328-2.708h-15.73Z",
+                    transform: "translate(-228.79147 -93.71349)",
+                    fill: "#e6e6e6"
+                  }
+                })
+              ]
+            ),
+            _c("rect", {
+              attrs: {
+                x: "670.35645",
+                y: "260.34249",
+                width: "8",
+                height: "67",
+                transform: "translate(-239.05506 469.193) rotate(-45)",
+                fill: "#fff"
+              }
+            }),
+            _c("rect", {
+              attrs: {
+                x: "670.35645",
+                y: "260.34249",
+                width: "8",
+                height: "67",
+                transform: "translate(176.50097 -484.49103) rotate(45)",
+                fill: "#fff"
+              }
+            }),
+            _c("path", {
+              attrs: {
+                d:
+                  "M319.05083,549.84841a10.05579,10.05579,0,0,0,5.38778-14.44741l23.56521-26.86373-18.39547-2.53779-19.5577,25.89933a10.11027,10.11027,0,0,0,9.00018,17.9496Z",
+                transform: "translate(-228.79147 -93.71349)",
+                fill: "#9f616a"
+              }
+            }),
+            _c("polygon", {
+              attrs: {
+                points:
+                  "118.679 694.215 102.244 694.214 94.425 630.82 118.682 630.821 118.679 694.215",
+                fill: "#9f616a"
+              }
+            }),
+            _c("path", {
+              attrs: {
+                d:
+                  "M351.66209,803.8602l-52.99477-.002v-.6703a20.62815,20.62815,0,0,1,20.627-20.62671h.00131l32.3674.00131Z",
+                transform: "translate(-228.79147 -93.71349)",
+                fill: "#2f2e41"
+              }
+            }),
+            _c("polygon", {
+              attrs: {
+                points:
+                  "204.713 680.461 189.017 685.334 162.751 627.11 185.917 619.918 204.713 680.461",
+                fill: "#9f616a"
+              }
+            }),
+            _c("path", {
+              attrs: {
+                d:
+                  "M442.23214,788.14677,391.62055,803.8602l-.19877-.64014a20.62813,20.62813,0,0,1,13.58247-25.81574l.00126-.00039,30.91186-9.59713Z",
+                transform: "translate(-228.79147 -93.71349)",
+                fill: "#2f2e41"
+              }
+            }),
+            _c("path", {
+              attrs: {
+                id: "ae9bdfa9-f7e0-4b2f-8168-ca8868d01318",
+                "data-name": "Path 973",
+                d: "M334.88445,495.65649l-24.34114,27.8773,19.05613,1.71471Z",
+                transform: "translate(-228.79147 -93.71349)",
+                fill: "#e6e6e6"
+              }
+            }),
+            _c("path", {
+              attrs: {
+                id: "b88343d2-9c47-4183-8a8a-427a73d8d9be",
+                "data-name": "Path 975",
+                d:
+                  "M325.37344,531.58948s-8.455,4.227-9.512,23.251,3.171,68.7,3.171,68.7-4.227,22.194,0,42.274-4.227,93,1.057,93,32.762,3.171,33.819,0,2.114-50.729,2.114-50.729,8.455-24.308,0-39.1c0,0,29.52086,51.54832,48.615,90.889,4.17891,8.61,35.933-1.057,30.649-10.569s-17.966-52.843-17.966-52.843-9.512-31.706-26.421-45.445l8.455-67.639s17.967-45.445,7.4-51.786S325.37344,531.58948,325.37344,531.58948Z",
+                transform: "translate(-228.79147 -93.71349)",
+                fill: "#2f2e41"
+              }
+            }),
+            _c("circle", {
+              attrs: {
+                id: "fdc24b21-a9e1-47f2-b2e4-7458730b7c21",
+                "data-name": "Ellipse 182",
+                cx: "128.28696",
+                cy: "238.129",
+                r: "27.478",
+                fill: "#a0616a"
+              }
+            }),
+            _c("path", {
+              attrs: {
+                id: "ac268c91-41f4-49c7-bce6-773e5eb69fa2",
+                "data-name": "Path 976",
+                d:
+                  "M387.72745,361.43447l-34.16,20.08s-13.08,7.366-17.966,20.08c-5.208,13.55-2.181,32.628,0,36.99,4.227,8.455-1.773,29.592-1.773,29.592l-5.284,48.615s-19.023,17.966-4.227,20.08,41.217-1.057,57.07,0,33.819,3.171,28.535-7.4-11.625-17.967-5.284-39.1c4.962-16.54,4.747-78.383,4.419-104.5a21.025,21.025,0,0,0-10.211-17.767Z",
+                transform: "translate(-228.79147 -93.71349)",
+                fill: "#e5e5e5"
+              }
+            }),
+            _c("path", {
+              staticStyle: { isolation: "isolate" },
+              attrs: {
+                id: "aebed2c8-94ca-417e-8b11-27e17cbf3024",
+                "data-name": "Path 980",
+                d:
+                  "M372.40744,394.72649l3.17,64.468-30.726,62.223-5.211-1.983,31.706-58.127Z",
+                transform: "translate(-228.79147 -93.71349)",
+                opacity: "0.1"
+              }
+            }),
+            _c("path", {
+              staticStyle: { isolation: "isolate" },
+              attrs: {
+                id: "e13ea0c4-bc86-4025-9528-1665a42d3372",
+                "data-name": "Path 982",
+                d: "M407.27945,472.93247v-7.4l-35.929,59.186Z",
+                transform: "translate(-228.79147 -93.71349)",
+                opacity: "0.1"
+              }
+            }),
+            _c("path", {
+              attrs: {
+                id: "eb3190ba-6b3f-4b2b-91d1-1543e580b413",
+                "data-name": "Path 983",
+                d:
+                  "M337.57645,306.38749l-4.539-1.816s9.5-10.457,22.713-9.548l-3.717-4.092s9.085-3.637,17.345,5.91c4.342,5.019,9.365,10.919,12.5,17.564h4.865l-2.03,4.471,7.106,4.471-7.294-.8a24.73921,24.73921,0,0,1-.69,11.579l.2,3.534s-8.459-13.089-8.459-14.905v4.547s-4.543-4.092-4.543-6.82l-2.478,3.183-1.239-5-15.28,5,2.476-4.094-9.5,1.364,3.717-5s-10.737,5.91-11.15,10.912-5.781,11.366-5.781,11.366l-2.478-4.547S325.60443,313.20747,337.57645,306.38749Z",
+                transform: "translate(-228.79147 -93.71349)",
+                fill: "#2f2e41"
+              }
+            }),
+            _c("path", {
+              attrs: {
+                d:
+                  "M355.35408,552.83885a10.05581,10.05581,0,0,0,2.73778-15.17434l18.42263-30.62-18.55382.76775-14.64995,28.95959a10.11028,10.11028,0,0,0,12.04336,16.067Z",
+                transform: "translate(-228.79147 -93.71349)",
+                fill: "#9f616a"
+              }
+            }),
+            _c("path", {
+              attrs: {
+                id: "a62f6567-f472-4931-86f9-ff652851a370",
+                "data-name": "Path 981",
+                d:
+                  "M397.24046,375.17548l7.926-1.585s23.779,17.438,16.381,52.314-40.16,87.719-40.16,87.719-7.4,9.512-9.512,11.625-6.341,0-4.227,3.171-3.171,5.284-3.171,5.284-23.251,0-21.137-8.455,38.047-68.7,38.047-68.7l-5.284-56.013S371.87446,373.0615,397.24046,375.17548Z",
+                transform: "translate(-228.79147 -93.71349)",
+                fill: "#e5e5e5"
+              }
+            })
+          ]
+        )
+      ])
+    ])
+  ])
+}
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -63395,102 +64014,117 @@ var render = function() {
   return _c("div", { staticClass: "container" }, [
     _c("div", { staticClass: "row" }, [
       _c("div", { staticClass: "col-12 mt-5" }, [
-        _c("div", { staticClass: "card" }, [
-          _c("div", { staticClass: "card-header" }, [
-            _c("h3", { staticClass: "card-title" }, [_vm._v("Users Table")]),
-            _vm._v(" "),
-            _c("div", { staticClass: "card-tools" }, [
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-success",
-                  attrs: {
-                    "data-toggle": "modal",
-                    "data-target": "#addNewUser"
-                  },
-                  on: { click: _vm.newModal }
-                },
-                [_c("i", { staticClass: "fas fa-users" }, [_vm._v("Add New")])]
-              )
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "card-body" }, [
-            _c("div", { staticClass: "dt-responsive table-responsive" }, [
-              _c(
-                "table",
-                {
-                  staticClass: "table table-hover text-nowrap",
-                  attrs: { id: "simpletable" }
-                },
-                [
-                  _vm._m(0),
-                  _vm._v(" "),
+        _vm.$gate.isAdminAuthor()
+          ? _c("div", { staticClass: "card" }, [
+              _c("div", { staticClass: "card-header" }, [
+                _c("h3", { staticClass: "card-title" }, [
+                  _vm._v("Users Table")
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "card-tools" }, [
                   _c(
-                    "tbody",
-                    _vm._l(_vm.users, function(user) {
-                      return _c("tr", { key: user.id }, [
-                        _c("td", [_vm._v(_vm._s(user.id))]),
-                        _vm._v(" "),
-                        _c("td", [_vm._v(_vm._s(user.name))]),
-                        _vm._v(" "),
-                        _c("td", [_vm._v(_vm._s(user.email))]),
-                        _vm._v(" "),
-                        _c("td", [
-                          _c("span", { staticClass: "tag tag-success" }, [
-                            _vm._v(_vm._s(_vm._f("capitalize")(user.type)))
-                          ])
-                        ]),
-                        _vm._v(" "),
-                        _c("td", [
-                          _vm._v(_vm._s(_vm._f("Date")(user.created_at)))
-                        ]),
-                        _vm._v(" "),
-                        _c("td", [
-                          _c(
-                            "a",
-                            {
-                              attrs: { href: "#", title: "edit" },
-                              on: {
-                                click: function($event) {
-                                  return _vm.EditUser(user)
-                                }
-                              }
-                            },
-                            [_c("i", { staticClass: "fas fa-edit" })]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "button",
-                            {
-                              staticStyle: {
-                                border: "none",
-                                "background-color": "transparent",
-                                outline: "none"
-                              },
-                              attrs: { type: "submit", title: "delete" },
-                              on: {
-                                click: function($event) {
-                                  return _vm.DeleteUser(user.id)
-                                }
-                              }
-                            },
-                            [
-                              _c("i", {
-                                staticClass: "fas fa-trash text-danger"
-                              })
-                            ]
-                          )
-                        ])
+                    "button",
+                    {
+                      staticClass: "btn btn-success",
+                      attrs: {
+                        "data-toggle": "modal",
+                        "data-target": "#addNewUser"
+                      },
+                      on: { click: _vm.newModal }
+                    },
+                    [
+                      _c("i", { staticClass: "fas fa-users" }, [
+                        _vm._v("Add New")
                       ])
-                    }),
-                    0
+                    ]
                   )
-                ]
-              )
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "card-body" }, [
+                _c("div", { staticClass: "dt-responsive table-responsive" }, [
+                  _c(
+                    "table",
+                    {
+                      staticClass: "table table-hover text-nowrap",
+                      attrs: { id: "simpletable" }
+                    },
+                    [
+                      _vm._m(0),
+                      _vm._v(" "),
+                      _c(
+                        "tbody",
+                        _vm._l(_vm.users, function(user) {
+                          return _c("tr", { key: user.id }, [
+                            _c("td", [_vm._v(_vm._s(user.id))]),
+                            _vm._v(" "),
+                            _c("td", [_vm._v(_vm._s(user.name))]),
+                            _vm._v(" "),
+                            _c("td", [_vm._v(_vm._s(user.email))]),
+                            _vm._v(" "),
+                            _c("td", [
+                              _c("span", { staticClass: "tag tag-success" }, [
+                                _vm._v(_vm._s(_vm._f("capitalize")(user.type)))
+                              ])
+                            ]),
+                            _vm._v(" "),
+                            _c("td", [
+                              _vm._v(_vm._s(_vm._f("Date")(user.created_at)))
+                            ]),
+                            _vm._v(" "),
+                            _c("td", [
+                              _c(
+                                "a",
+                                {
+                                  attrs: { href: "#", title: "edit" },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.EditUser(user)
+                                    }
+                                  }
+                                },
+                                [_c("i", { staticClass: "fas fa-edit" })]
+                              ),
+                              _vm._v(" "),
+                              _vm.$gate.isAdmin()
+                                ? _c(
+                                    "button",
+                                    {
+                                      staticStyle: {
+                                        border: "none",
+                                        "background-color": "transparent",
+                                        outline: "none"
+                                      },
+                                      attrs: {
+                                        type: "submit",
+                                        title: "delete"
+                                      },
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.DeleteUser(user.id)
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _c("i", {
+                                        staticClass: "fas fa-trash text-danger"
+                                      })
+                                    ]
+                                  )
+                                : _vm._e()
+                            ])
+                          ])
+                        }),
+                        0
+                      )
+                    ]
+                  )
+                ])
+              ])
             ])
-          ])
-        ])
+          : _vm._e(),
+        _vm._v(" "),
+        !_vm.$gate.isAdmin() ? _c("div", [_c("notfound")], 1) : _vm._e()
       ])
     ]),
     _vm._v(" "),
@@ -63720,7 +64354,7 @@ var render = function() {
                       },
                       [
                         _vm._v(
-                          "\n                            Close\n                        "
+                          "\n                                Close\n                            "
                         )
                       ]
                     )

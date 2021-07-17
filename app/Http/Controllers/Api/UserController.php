@@ -21,7 +21,10 @@ class UserController extends Controller
      */
     public function index()
     {
-        return User::orderBy('id', 'DESC')->get();
+        // $this->authorize("isAdmin")
+        if (\Gate::allows('isAdmin') || \Gate::allows('isAuthor')) {
+            return User::orderBy('id', 'DESC')->get();
+        }
     }
 
     /**
@@ -118,6 +121,8 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
+        //Only Admins have permission to delete users
+        $this->authorize('isAdmin');
         $user = User::where('id', $id);
         $user->delete();
     }
