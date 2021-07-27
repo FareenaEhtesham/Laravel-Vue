@@ -28,7 +28,7 @@
         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="index3.html" class="nav-link">Home</a>
+      <router-link to="/" class="nav-link">Home</router-link>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
         <a href="#" class="nav-link">Contact</a>
@@ -96,6 +96,18 @@
               </p>
             </router-link>
           </li>
+          
+          @can("isAdmin")
+          <li class="nav-item">
+            <a href="{{url('invoice')}}" class="nav-link" active-class="active" exact>
+            <i class="nav-icon fas fa-file-invoice"></i>
+              <p>
+                Invoice
+              </p>
+            </a>
+          </li>
+          @endcan
+
           @can("isAdmin")
           <li class="nav-item">
             <router-link to="/developer" class="nav-link" active-class="active" exact>

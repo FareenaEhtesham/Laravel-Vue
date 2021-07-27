@@ -67,5 +67,11 @@ Vue.component('notfound', require('./components/NotFound.vue').default);
 
 const app = new Vue({
     el: '#app',
-    router: router
+    router: router,
+
+    methods:{
+      printInvoice(){
+        window.print();
+      },
+    }
 });

@@ -2,7 +2,7 @@
     <div class="container">
         <div class="row justify-content-center">
             <div>
-                 <notfound></notfound>
+                
             </div>
         </div>
     </div>

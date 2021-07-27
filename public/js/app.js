@@ -1888,6 +1888,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   mounted: function mounted() {
     console.log("Component mounted.");
@@ -2587,7 +2590,12 @@ vue__WEBPACK_IMPORTED_MODULE_6__.default.prototype.$gate = new _Gate__WEBPACK_IM
 vue__WEBPACK_IMPORTED_MODULE_6__.default.component('notfound', __webpack_require__(/*! ./components/NotFound.vue */ "./resources/js/components/NotFound.vue").default);
 var app = new vue__WEBPACK_IMPORTED_MODULE_6__.default({
   el: '#app',
-  router: router
+  router: router,
+  methods: {
+    printInvoice: function printInvoice() {
+      window.print();
+    }
+  }
 });
 
 /***/ }),
@@ -2651,6 +2659,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_Profile_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/Profile.vue */ "./resources/js/components/Profile.vue");
 /* harmony import */ var _components_Users_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/Users.vue */ "./resources/js/components/Users.vue");
 /* harmony import */ var _components_Developer_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/Developer.vue */ "./resources/js/components/Developer.vue");
+/* harmony import */ var _components_NotFound_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/NotFound.vue */ "./resources/js/components/NotFound.vue");
+
 
 
 
@@ -2658,6 +2668,14 @@ __webpack_require__.r(__webpack_exports__);
 var routes = [{
   name: 'dashboard',
   path: '/dashboard',
+  component: _components_Dashboard_vue__WEBPACK_IMPORTED_MODULE_0__.default
+}, {
+  name: 'home',
+  path: '/home',
+  component: _components_Dashboard_vue__WEBPACK_IMPORTED_MODULE_0__.default
+}, {
+  name: 'default',
+  path: '/',
   component: _components_Dashboard_vue__WEBPACK_IMPORTED_MODULE_0__.default
 }, {
   name: 'profile',
@@ -2671,6 +2689,10 @@ var routes = [{
   name: 'developer',
   path: '/developer',
   component: _components_Developer_vue__WEBPACK_IMPORTED_MODULE_3__.default
+}, {
+  name: 'NotFound',
+  path: '*',
+  component: _components_NotFound_vue__WEBPACK_IMPORTED_MODULE_4__.default
 }];
 
 /***/ }),
@@ -63120,13 +63142,18 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container" }, [
-    _c("div", { staticClass: "row justify-content-center" }, [
-      _c("div", [_c("notfound")], 1)
-    ])
-  ])
+  return _vm._m(0)
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "container" }, [
+      _c("div", { staticClass: "row justify-content-center" }, [_c("div")])
+    ])
+  }
+]
 render._withStripped = true
 
 
@@ -63149,25 +63176,27 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", { staticClass: "container" }, [
+    _vm.$gate.isAdmin()
+      ? _c("div", { staticClass: "row justify-content-center" }, [_vm._m(0)])
+      : _vm._e(),
+    _vm._v(" "),
+    !_vm.$gate.isAdmin() ? _c("div", [_c("notfound")], 1) : _vm._e()
+  ])
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "container" }, [
-      _c("div", { staticClass: "row justify-content-center" }, [
-        _c("div", { staticClass: "col-md-8" }, [
-          _c("div", { staticClass: "card" }, [
-            _c("div", { staticClass: "card-header" }, [
-              _vm._v("Dashboard Component")
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "card-body" }, [
-              _vm._v("I'm an example component.")
-            ])
-          ])
+    return _c("div", { staticClass: "col-md-8" }, [
+      _c("div", { staticClass: "card" }, [
+        _c("div", { staticClass: "card-header" }, [
+          _vm._v("Developer Component")
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "card-body" }, [
+          _vm._v("I'm an developer component.")
         ])
       ])
     ])

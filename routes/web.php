@@ -15,8 +15,7 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 
-Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('main');
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('dashboard', 'HomeController@index');
-
+// this is how we use ACL for laravel routes and blade files. so that 
+//no one can access through the routes as well.
+Route::get('/invoice','InvoiceController@index')->middleware('can:isAdmin');
 Route::get('{path}','HomeController@index')->where( 'path', '([A-z]+)?' );
